@@ -1,0 +1,146 @@
+<br>
+<br>
+<h1 style="text-align: center">Seguimientos</h1>
+<div id="container">
+  <div class="column-list">
+    <div class="margin-sides">
+      <p>Seguimientos</p>
+      <button class="btn btn-primary" type="button" id="createUser" data-toggle="modal" data-target="#newUser">Añade un nuevo seguimiento</button>
+      <mat-card class="mat-card-list">
+        <mat-list role="list">
+          <mat-list-item *ngFor="let user of users"
+                         class="no-pad list-item"
+                         role="listitem"
+                         (click)="userSelect(user)">
+            <div class="text">
+              <h5>{{user.nombre}}</h5>
+            </div>
+            <button class="btn btn-primary" type="button" id="userDetailsButton" data-toggle="modal" data-target="#userDetails">Ver Detalles</button>
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="newUser" tabindex="-1" role="dialog" aria-labelledby="userLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="institutionLabel">Nuevo Seguimiento</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="newUserForm">
+          <div class="form-group">
+            <div class="example-container">
+              <input type="text" formControlName="userNombre" id='userNombre' placeholder="Nombre">
+            </div>
+            <div class="example-container">
+              <input type="text" formControlName="userFecha" #fechainput id='userFecha' placeholder="Fecha">
+            </div>
+            <div class="example-container">
+              <input type="text" formControlName="userDni" #dniinput id='userDni' placeholder="DNI">
+            </div>
+            <div class="example-container">
+              <input type="text" formControlName="userTelefono" #telefonoinput id='userTelefono' placeholder="Telefono">
+            </div>
+            <div class="example-container">
+              <input type="text" formControlName="userFiebre" #fiebreinput id='userFiebre' placeholder="Fiebre">
+            </div>
+            <div class="example-container">
+              <input type="text" formControlName="userTos" #tosinput id='userTos' placeholder="Tos">
+            </div>
+            <div class="example-container">
+              <input type="text" formControlName="userDificultad" #dificultadinput id='userDificultad' placeholder="Dificultad">
+            </div>
+            <div class="example-container">
+              <input type="text" formControlName="userMalestar" #malestarinput id='userMalestar' placeholder="Malestar">
+            </div>
+            <div class="validation-errors">
+              <ng-container *ngFor="let validation of validation_messages.nombre">
+                <div class="alert alert-danger" *ngIf="newUserForm.get('nombre').hasError(validation.type)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+              <ng-container *ngFor="let validation of validation_messages.fecha">
+                <div class="alert alert-danger" *ngIf="newUserForm.get('fecha').hasError(validation.type)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+              <ng-container *ngFor="let validation of validation_messages.dni">
+                <div class="alert alert-danger" *ngIf="newUserForm.get('dni').hasError(validation.type)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+              <ng-container *ngFor="let validation of validation_messages.telefono">
+                <div class="alert alert-danger" *ngIf="newUserForm.get('telefono').hasError(validation.type)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+              <ng-container *ngFor="let validation of validation_messages.fiebre">
+                <div class="alert alert-danger" *ngIf="newUserForm.get('fiebre').hasError(validation.type)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+              <ng-container *ngFor="let validation of validation_messages.tos">
+                <div class="alert alert-danger" *ngIf="newUserForm.get('tos').hasError(validation.type)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+              <ng-container *ngFor="let validation of validation_messages.dificultad">
+                <div class="alert alert-danger" *ngIf="newUserForm.get('dificultad').hasError(validation.type)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+              <ng-container *ngFor="let validation of validation_messages.malestar">
+                <div class="alert alert-danger" *ngIf="newUserForm.get('malestar').hasError(validation.type)">
+                  {{ validation.message }}
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="createUser()" data-dismiss="modal">Guardar Seguimiento</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="userDetails" tabindex="-1" role="dialog" aria-labelledby="userDetailLabel" >
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="institutionDetailLabel">Detalles del Seguimiento</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="detailsUserForm">
+          <div class="form-group">
+            <div class="example-container" *ngIf="currentUser">
+              <p>{{'Nombre: '+currentUser.nombre}}</p>
+              <p>{{'Fecha: '+currentUser.fecha}}</p>
+              <p>{{'Dni: '+currentUser.dni}}</p>
+              <p>{{'Telefono : '+currentUser.telefono}}</p>
+              <p>{{'Fiebre : '+currentUser.fiebre}}</p>
+              <p>{{'Tos : '+currentUser.tos}}</p>
+              <p>{{'Dificultad : '+currentUser.dificultad}}</p>
+              <p>{{'Malestar : '+currentUser.malestar}}</p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="deleteUser()" data-dismiss="modal">Borrar Seguimiento</button>
+      </div>
+    </div>
+  </div>
+</div>
